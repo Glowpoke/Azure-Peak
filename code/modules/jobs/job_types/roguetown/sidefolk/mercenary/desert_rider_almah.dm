@@ -87,8 +87,8 @@
 		momentum.chant = subclass_selected
 
 	if(H.mind)
-		switch(subclass_selected)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zeybek_momentum/almah)
+		switch(subclass_selected)
 
 			if("blade")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)

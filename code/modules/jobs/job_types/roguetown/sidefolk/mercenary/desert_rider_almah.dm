@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/desert_rider_almah
 	name = "Desert Rider Almah"
-	tutorial = "You're an Almah - a blade dancer, trained in the arts of spellbladery, an art originating from Azurea in ancient time. Your people have refined spellbladery into an artform. They call you a bladedancer - for the beautiful, bloody tapestry of magycks and blade you weave out of your foes in battle."
+	tutorial = "You're an Almah - a blade dancer, trained in the arts of spellbladery, an art originating from Azurea in ancient times. Your people have refined spellbladery into an artform. They call you a bladedancer - for the beautiful, bloody tapestry of magycks and blade you weave out of your foes in battle."
 	allowed_sexes = list(MALE, FEMALE)
 
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_almah
@@ -38,9 +38,8 @@
 	. = ..()
 	if(href_list["subclass"])
 		subclass_selected = href_list["subclass"]
-	else if(href_list["close"])
-		if(!subclass_selected)
-			subclass_selected = "blade"
+	else if(href_list["close"] && !subclass_selected)
+		subclass_selected = "blade"
 
 /datum/outfit/job/roguetown/mercenary/desert_rider_almah/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -65,8 +64,8 @@
 		/obj/item/clothing/neck/roguetown/shalal,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/rogueweapon/spellbook/greater
-		)
+		/obj/item/rogueweapon/spellbook/greater,
+	)
 
 	// Spellblade chant selection - almah faction, blade choice is locked to shamshirs
 	subclass_selected = null
@@ -79,7 +78,7 @@
 		stoplag(1)
 	H << browse(null, "window=spellblade_chant")
 
-	if(!subclass_selected)
+	if(subclass_selected != "blade" && subclass_selected != "phalangite" && subclass_selected != "macebearer")
 		subclass_selected = "blade"
 
 	var/datum/status_effect/buff/arcyne_momentum/momentum = H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
@@ -89,7 +88,6 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zeybek_momentum/almah)
 		switch(subclass_selected)
-
 			if("blade")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)
@@ -116,8 +114,8 @@
 
 	switch(subclass_selected)
 		if("blade")
-			var/blade_weapons = list("Dual Shamshirs", "Shalal sabre & Shield")
-			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in blade_weapons
+			var/list/blade_weapons = list("Dual Shamshirs", "Shalal Sabre & Shield")
+			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as null|anything in blade_weapons
 			switch(weapon_choice)
 				if("Dual Shamshirs")
 					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
@@ -125,13 +123,19 @@
 					l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 					beltl = /obj/item/rogueweapon/scabbard/sword
 					beltr = /obj/item/rogueweapon/scabbard/sword
-				if("Shalal sabre & Shield")
+				if("Shalal Sabre & Shield")
 					r_hand = /obj/item/rogueweapon/sword/long/marlin
 					beltr = /obj/item/rogueweapon/scabbard/sword
 					backl = /obj/item/rogueweapon/shield/tower/raneshen
+				else
+					r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+					l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+					beltl = /obj/item/rogueweapon/scabbard/sword
+					beltr = /obj/item/rogueweapon/scabbard/sword
+					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 		if("phalangite")
-			var/polearm_weapons = list("Spear", "Dory & Shield")
-			var/polearm_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in polearm_weapons
+			var/list/polearm_weapons = list("Spear", "Dory & Shield")
+			var/polearm_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as null|anything in polearm_weapons
 			switch(polearm_choice)
 				if("Spear")
 					r_hand = /obj/item/rogueweapon/spear
@@ -139,9 +143,12 @@
 				if("Dory & Shield")
 					r_hand = /obj/item/rogueweapon/spear/spellblade
 					backl = /obj/item/rogueweapon/shield/tower/raneshen
+				else
+					r_hand = /obj/item/rogueweapon/spear
+					backl = /obj/item/rogueweapon/scabbard/gwstrap
 		if("macebearer")
-			var/mace_weapons = list("Steel Mace", "Steel Warhammer & Shield", "Grand Mace", "Battle Axe", "Steel Greataxe")
-			var/mace_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in mace_weapons
+			var/list/mace_weapons = list("Steel Mace", "Steel Warhammer & Shield", "Grand Mace", "Battle Axe", "Steel Greataxe")
+			var/mace_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as null|anything in mace_weapons
 			var/picked_axe = FALSE
 			switch(mace_choice)
 				if("Steel Mace")
@@ -159,6 +166,8 @@
 					r_hand = /obj/item/rogueweapon/greataxe/steel
 					backl = /obj/item/rogueweapon/scabbard/gwstrap
 					picked_axe = TRUE
+				else
+					r_hand = /obj/item/rogueweapon/mace/steel
 			if(picked_axe)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 	H.merctype = 4

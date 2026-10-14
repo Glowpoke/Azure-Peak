@@ -65,6 +65,7 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/sahir_sandstorm)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zeybek_momentum/sahir)
 		var/weapons = list("Twin Shamshirs", "Greater Staff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)

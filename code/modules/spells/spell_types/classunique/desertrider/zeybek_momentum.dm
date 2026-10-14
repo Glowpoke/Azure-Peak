@@ -15,6 +15,11 @@
 /obj/effect/proc_holder/spell/self/zeybek_momentum/zeybek
 	momentum_style = "zeybek"
 
+/obj/effect/proc_holder/spell/self/zeybek_momentum/sahir
+	desc = "Channel the arcyne arts through every landed strike. For 45 seconds, each landed strike builds momentum, increasing level every 5 strikes. Getting to a higher level increases duration, and restores energy. Bonuses reset by bait or riposte, and completely lost on exhaustion or stun. The first level of momentum gives +1 SPD, +1 WIL. The second also grants +1 PER. The third and final state gives Fortitude-DRider (-50% stamina usage)."
+	invocations = list("WEAVE.")
+	momentum_style = "sahir"
+
 /obj/effect/proc_holder/spell/self/zeybek_momentum/janissary
 	desc = "Steady your stance and grow unbreakable with each landed strike. For 45 seconds, each landed strike builds momentum, increasing level every 5 strikes. Getting to a higher level increases duration, and restores energy. Bonuses reset by bait or riposte, and completely lost on exhaustion or stun. The first level of momentum gives +1 STR, +1 WIL. The second also grants +2 INT, +1 FOR. The third grants Fortitude."
 	invocations = list("BRACE.")
@@ -195,6 +200,19 @@
 
 /datum/status_effect/buff/zeybek_momentum/proc/apply_stack_bonus(stack_level)
 	switch(momentum_style)
+		if("sahir")
+			if(stack_level == 1)
+				owner.change_stat(STATKEY_WIL, 1)
+				owner.change_stat(STATKEY_SPD, 1)
+				wil_bonus += 1
+				spd_bonus += 1
+				to_chat(owner, span_notice("WEAVE."))
+			else
+				owner.change_stat(STATKEY_WIL, 1)
+				owner.change_stat(STATKEY_SPD, 2)
+				wil_bonus += 1
+				spd_bonus += 2
+				to_chat(owner, span_danger("UNRAVEL."))
 		if("janissary")
 			if(stack_level == 1)
 				owner.change_stat(STATKEY_STR, 1)
@@ -203,8 +221,10 @@
 				wil_bonus += 1
 				to_chat(owner, span_notice("BRACE."))
 			else
+				owner.change_stat(STATKEY_STR, 1)
 				owner.change_stat(STATKEY_INT, 2)
 				owner.change_stat(STATKEY_LCK, 1)
+				str_bonus += 1
 				int_bonus += 2
 				for_bonus += 1
 				to_chat(owner, span_danger("CLOSE RANK."))
@@ -216,11 +236,11 @@
 				spd_bonus += 1
 				to_chat(owner, span_notice("THREAD."))
 			else
-				owner.change_stat(STATKEY_WIL, 1)
-				owner.change_stat(STATKEY_INT, 1)
 				owner.change_stat(STATKEY_SPD, 1)
+				owner.change_stat(STATKEY_WIL, 2)
+				owner.change_stat(STATKEY_INT, 1)
 				spd_bonus += 1
-				wil_bonus += 1
+				wil_bonus += 2
 				int_bonus += 1
 				to_chat(owner, span_danger("COMPOSE."))
 		else
@@ -233,10 +253,10 @@
 			else
 				owner.change_stat(STATKEY_WIL, 1)
 				owner.change_stat(STATKEY_SPD, 1)
-				owner.change_stat(STATKEY_PER, 1)
+				owner.change_stat(STATKEY_PER, 2)
 				wil_bonus += 1
 				spd_bonus += 1
-				per_bonus += 1
+				per_bonus += 2
 				to_chat(owner, span_danger("TWO."))
 
 /datum/status_effect/buff/zeybek_momentum/proc/get_final_momentum_message()
@@ -245,6 +265,8 @@
 			return span_userdanger("BREAK THEIR FUCKING SKULLS.")
 		if("almah")
 			return span_userdanger("OBLITERATE THEIR WORLD, WEAVE SYMPHONY.")
+		if("sahir")
+			return span_userdanger("WITH SPELL AND STEEL, I AM UNSTOPPABLE.")
 		else
 			return span_userdanger("I'VE GOT YOU NOW, FREEKSHIT.")
 

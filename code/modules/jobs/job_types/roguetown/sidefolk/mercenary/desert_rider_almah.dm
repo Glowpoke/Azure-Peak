@@ -88,6 +88,8 @@
 
 	if(H.mind)
 		switch(subclass_selected)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zeybek_momentum/almah)
+
 			if("blade")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)

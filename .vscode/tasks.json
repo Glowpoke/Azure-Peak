@@ -2,11 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"command": "${command:dreammaker.reparse}",
-			"group": "build",
-			"label": "dm: reparse"
-		},
-		{
 			"type": "shell",
 			"command": "bin/tgui-dev",
 			"windows": {
@@ -43,7 +38,7 @@
 			},
 			"options": {
 				"env": {
-					"DM_EXE": "${config:dreammaker.byondPath}"
+					"DM_EXE": "${workspaceFolder}/tools/local/byond-dm"
 				}
 			},
 			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
@@ -51,7 +46,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All"
 		},
 		{
@@ -64,7 +58,7 @@
 			},
 			"options": {
 				"env": {
-					"DM_EXE": "${config:dreammaker.byondPath}"
+					"DM_EXE": "${workspaceFolder}/tools/local/byond-dm"
 				}
 			},
 			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
@@ -72,7 +66,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (Local Testing)"
 		},
 		{
@@ -85,14 +78,13 @@
 			},
 			"options": {
 				"env": {
-					"DM_EXE": "${config:dreammaker.byondPath}"
+					"DM_EXE": "${workspaceFolder}/tools/local/byond-dm"
 				}
 			},
 			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
 			"group": {
 				"kind": "build"
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (low memory mode)"
 		},
 		{
@@ -105,14 +97,13 @@
 			},
 			"options": {
 				"env": {
-					"DM_EXE": "${config:dreammaker.byondPath}"
+					"DM_EXE": "${workspaceFolder}/tools/local/byond-dm"
 				}
 			},
 			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
 			"group": {
 				"kind": "build"
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (unit tests)"
 		}
 	]

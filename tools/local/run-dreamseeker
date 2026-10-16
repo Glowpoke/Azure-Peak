@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+WINEPREFIX="${WINEPREFIX:-/home/glowpoke/Games/byond}"
+BYOND_BIN="${BYOND_BIN:-$WINEPREFIX/drive_c/Program Files (x86)/BYOND/bin}"
+WINE_BIN="${WINE_BIN:-/home/glowpoke/.local/share/lutris/runners/wine/wine-10.8-staging-tkg-ntsync-x86_64/bin/wine}"
+WORKSPACE="$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)"
+export WINEPREFIX
+
+DMB_PATH="Z:${WORKSPACE}/roguetown.dmb"
+exec "$WINE_BIN" "$BYOND_BIN/dreamseeker.exe" "$DMB_PATH" "$@"

@@ -2,6 +2,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "node-terminal",
+			"request": "launch",
+			"name": "Run DreamSeeker via Wine",
+			"preLaunchTask": "Build All (Local Testing)",
+			"command": "${workspaceFolder}/tools/local/run-dreamseeker"
+		},
+		{
 			"type": "byond",
 			"request": "launch",
 			"name": "Launch DreamSeeker (Local Testing)",
@@ -38,6 +45,13 @@
             "preLaunchTask": "Build All (unit tests)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
 			"dreamDaemon": true
+		},
+		{
+			"type": "node-terminal",
+			"request": "launch",
+			"name": "Run DreamDaemon via Wine",
+			"preLaunchTask": "Build All (Local Testing)",
+			"command": "${workspaceFolder}/tools/local/run-dreamdaemon"
 		}
 	]
 }

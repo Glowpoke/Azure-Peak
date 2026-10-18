@@ -2,11 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"command": "${command:dreammaker.reparse}",
-			"group": "build",
-			"label": "dm: reparse"
-		},
-		{
 			"type": "shell",
 			"command": "bin/tgui-dev",
 			"windows": {
@@ -51,7 +46,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All"
 		},
 		{
@@ -72,7 +66,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (Local Testing)"
 		},
 		{
@@ -92,7 +85,6 @@
 			"group": {
 				"kind": "build"
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (low memory mode)"
 		},
 		{
@@ -112,7 +104,6 @@
 			"group": {
 				"kind": "build"
 			},
-			"dependsOn": "dm: reparse",
 			"label": "Build All (unit tests)"
 		}
 	]
